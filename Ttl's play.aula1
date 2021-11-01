@@ -1,0 +1,45 @@
+import turtle # Importar modulo
+
+
+#CRIANDO A JANELA
+jn = turtle.Screen()
+jn.title('Jogo da Tartaruga')
+jn.setup(width= 600, height= 600)
+jn.bgcolor('white')
+
+#BORDA
+b = turtle.Turtle()
+b.penup()
+b.setposition(-225, 225)
+b.pendown()
+b.hideturtle()
+b.color('black, blue')
+b.begin_fill()
+for c in range(4):
+    b.forward(510)
+    b.left(-90)
+b.end_fill()
+
+
+
+#CRIAR PERSONAGEM
+player = turtle.Turtle()
+player.shape('turtle')
+player.color('black')
+player.penup()
+
+#FUNÇÕES
+def movup():
+    player.forward(15)
+def movleft():
+    player.left(10)
+def movright():
+    player.right(10)
+#INTERPRETAÇÃO
+jn.listen()
+jn.onkeypress(movup, 'Up')
+jn.onkeypress(movleft, 'Left')
+jn.onkeypress(movright, 'Right')
+
+jn.mainloop()
+
