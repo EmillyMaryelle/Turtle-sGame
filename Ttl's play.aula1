@@ -1,5 +1,5 @@
 import turtle # Importar modulo
-
+import random
 
 #CRIANDO A JANELA
 jn = turtle.Screen()
@@ -13,13 +13,12 @@ b.penup()
 b.setposition(-225, 225)
 b.pendown()
 b.hideturtle()
-b.color('black, blue')
+b.color('black', 'blue')
 b.begin_fill()
 for c in range(4):
     b.forward(510)
     b.left(-90)
 b.end_fill()
-
 
 
 #CRIAR PERSONAGEM
@@ -28,18 +27,73 @@ player.shape('turtle')
 player.color('black')
 player.penup()
 
-#FUNÇÕES
+#FRUTAS
+maça = turtle.Turtle()
+maça.shape('circle')
+maça.shapesize('0,75')
+maça.color('red')
+maça.penup()
+maça.speed(0)
+maça.setx(random.randrange(-255, 255))
+maça.sety(random.randrange(-255, 255))
+
+#VENENO
+veneno = turtle.Turtle()
+veneno.shape('circle')
+veneno.shapesize(0,75)
+veneno.color('green')
+
+
+
+ #FUNÇÕES
 def movup():
     player.forward(15)
+    if player.xcor() > 255 or player.xcor() < -255 or player.ycor() > 255 or player.ycor() < -255:
+        player.forward(-10)
 def movleft():
     player.left(10)
 def movright():
     player.right(10)
+def movback():
+    player.back()
+    if player.xcor() > 255 or player.xcor() < -255 or player.ycor() > 255 or player.ycor() < -255:
+        player.forward(-15)
+    
+
 #INTERPRETAÇÃO
 jn.listen()
 jn.onkeypress(movup, 'Up')
 jn.onkeypress(movleft, 'Left')
 jn.onkeypress(movright, 'Right')
+jn.onkeypress(movback, 'Down')
+
+
+while True:
+    jn.update()
+    if player.distance(maça)<20:
+        x = random.randint(-240, 240)
+        y = random.randint(-240, 240)
+        maça.goto(x, y)
+
+    if player.distance(veneno)<20:
+        x = random.randint(-240, 240)
+        y = random.randint(-240, 240)
+        veneno.goto(x, y)
+
+
+points = 0 
+poison = 3
+
+info = turtle.Turtle()
+info.goto (0,0) 
+info.penup()
+info.pendown
+info.pensize (3)
+info.hideturtle()
+info.setposition (-206,205)
+info_write= 'Points: %d' %pontos  
+info.write(info_write, font='Times new roman')
+
+
 
 jn.mainloop()
-
