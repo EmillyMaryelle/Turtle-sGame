@@ -1,99 +1,137 @@
-import turtle # Importar modulo
+#Emilly Maryelle
+import turtle
 import random
 
-#CRIANDO A JANELA
-jn = turtle.Screen()
-jn.title('Jogo da Tartaruga')
-jn.setup(width= 600, height= 600)
-jn.bgcolor('white')
+# parindo a tartaruguita
+
+head = turtle.Turtle()
+
+head.shape("turtle")
+
+head.color('dark olive green')
+
+head.shapesize(1.8)
+
+
+# monitor do jogo
+win = turtle.Screen()
+win.title("Turtle's game")
+win.bgcolor("black")
+win.setup(700, 700)
+
 
 #BORDA
 b = turtle.Turtle()
-b.penup()
-b.setposition(-225, 225)
-b.pendown()
-b.hideturtle()
-b.color('black', 'blue')
+b.shape("classic")
+b.color('aquamarine', 'medium aquamarine')
 b.begin_fill()
-for c in range(4):
-    b.forward(510)
-    b.left(-90)
+b.penup()
+b.setposition(-300, 300)
+b.pendown()
+for i in range(4):
+    b.forward(600)
+    b.right(90)
 b.end_fill()
 
+# vida
+v = turtle.Turtle()
+v.shape("circle")
+v.shapesize(1)
+v.color("red")
+v.speed(0)
+v.penup()
 
-#CRIAR PERSONAGEM
-player = turtle.Turtle()
-player.shape('turtle')
-player.color('black')
-player.penup()
+# morte
 
-#FRUTAS
-maça = turtle.Turtle()
-maça.shape('circle')
-maça.shapesize('0,75')
-maça.color('red')
-maça.penup()
-maça.speed(0)
-maça.setx(random.randrange(-255, 255))
-maça.sety(random.randrange(-255, 255))
+m = turtle.Turtle()
+m.shape("circle")
+m.shapesize(1)
+m.color("green")
+m.speed(0)
+m.penup()
 
-#VENENO
-veneno = turtle.Turtle()
-veneno.shape('circle')
-veneno.shapesize(0,75)
-veneno.color('green')
+# quantidade de pontos
+placar = 0
+cmc = turtle.Turtle()
+cmc.goto(0, 0)
+cmc.pensize(3)
+cmc.penup()
+cmc.pendown
+cmc.hideturtle()
+cmc.setposition(-285, 285)
 
 
+def pontos():
+    p = 'Pontos: %d' % placar
+    cmc.write(p)  
 
- #FUNÇÕES
+
+def apaga_pontos():
+    cmc.undo()
+    cmc.setposition(-285, 285)
+
+
+# quantidade de vidas da tartaruga
+cancer = 3
+vidas = turtle.Turtle()
+vidas.goto(0, 0)
+vidas.pensize(3)
+vidas.penup()
+vidas.hideturtle()
+vidas.setposition(-230, 230)
+
+
+def vida_tartaruga():
+    life = 'Vidas: %d' % cancer
+    vidas.write(life)
+
+def limpa_vida():
+    vidas.undo()
+    vidas.setposition(-230, 285)
+
+
+# movimentação
 def movup():
-    player.forward(15)
-    if player.xcor() > 255 or player.xcor() < -255 or player.ycor() > 255 or player.ycor() < -255:
-        player.forward(-10)
+    head.forward(15)
+    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
+        head.forward(-15)
 def movleft():
-    player.left(10)
+    head.left(10)
 def movright():
-    player.right(10)
+    head.right(10)
 def movback():
-    player.back()
-    if player.xcor() > 255 or player.xcor() < -255 or player.ycor() > 255 or player.ycor() < -255:
-        player.forward(-15)
-    
+    head.back(15)
+    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
+        head.back(15)
+# Aqui eu to definindo a parte do teclado onde vai movimentar ela 
+win.listen()
+win.onkeypress(movup, 'Up')
+win.onkeypress(movleft, 'Left')
+win.onkeypress(movright, 'Right')
+win.onkeypress(movback, 'Down')
 
-#INTERPRETAÇÃO
-jn.listen()
-jn.onkeypress(movup, 'Up')
-jn.onkeypress(movleft, 'Left')
-jn.onkeypress(movright, 'Right')
-jn.onkeypress(movback, 'Down')
+head.penup()
 
+turtle.listen()
 
 while True:
-    jn.update()
-    if player.distance(maça)<20:
-        x = random.randint(-240, 240)
-        y = random.randint(-240, 240)
-        maça.goto(x, y)
-
-    if player.distance(veneno)<20:
-        x = random.randint(-240, 240)
-        y = random.randint(-240, 240)
-        veneno.goto(x, y)
-
-
-points = 0 
-poison = 3
-
-info = turtle.Turtle()
-info.goto (0,0) 
-info.penup()
-info.pendown
-info.pensize (3)
-info.hideturtle()
-info.setposition (-206,205)
-info_write= 'Points: %d' %pontos  
-info.write(info_write, font='Times new roman')
-
-
-
-jn.mainloop()
+    win.update()
+    
+    if head.distance(v) < 24:
+    
+        x = random.randint(-290, 290)
+        y = random.randint(-290, 290)
+        v.goto(x, y)
+        apaga_pontos()
+        pontos()
+        placar += 1
+       
+    if head.distance(m) < 24:
+        x = random.randint(-290, 290)
+        y = random.randint(-290, 290)
+        m.goto(x, y)
+        limpa_vida()
+        vida_tartaruga()
+        cancer -= 1
+        if cancer == -1:
+            break
